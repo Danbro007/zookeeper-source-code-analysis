@@ -741,6 +741,9 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
     /**
      * The maximum number of threads to allow in the connectionExecutors thread
      * pool which will be used to initiate quorum server connections.
+     *
+     * 用于创建连接的线程池的大小
+     *
      */
     protected int quorumCnxnThreadsSize = QUORUM_CNXN_THREADS_SIZE_DEFAULT_VALUE;
 
@@ -1047,7 +1050,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         setQuorumVerifier(quorumConfig, false);
         adminServer = AdminServerFactory.createAdminServer();
     }
-
+    // 执行服务器的初始化工作
     public void initialize() throws SaslException {
         // init quorum auth server & learner
         if (isQuorumSaslAuthEnabled()) {
@@ -1058,7 +1061,9 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
             authServer = new SaslQuorumAuthServer(isQuorumServerSaslAuthRequired(), quorumServerLoginContext, authzHosts);
             authLearner = new SaslQuorumAuthLearner(isQuorumLearnerSaslAuthRequired(), quorumServicePrincipal, quorumLearnerLoginContext);
         } else {
+            // 身份验证的服务器
             authServer = new NullQuorumAuthServer();
+            // 不需要身份验证的服务器
             authLearner = new NullQuorumAuthLearner();
         }
     }

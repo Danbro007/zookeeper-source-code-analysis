@@ -928,7 +928,7 @@ public class QuorumPeerConfig {
     public long getServerId() {
         return serverId;
     }
-    // 如果非观察者角色的 ZK SERVER 数量大于1或者没有开启单机模式则认定为集群模式
+    // 如果投票参与者的服务器数量大于1或者没有开启单机模式则认定为集群模式
     public boolean isDistributed() {
         return quorumVerifier != null && (!standaloneEnabled || quorumVerifier.getVotingMembers().size() > 1);
     }

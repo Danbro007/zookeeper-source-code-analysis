@@ -127,7 +127,7 @@ public class QuorumPeerMain {
         }
 
         // Start and schedule the the PURGE task
-        // 开启清洗线程
+        // 开启清洗线程,它负责管理定时清除磁盘上的快照数据和事务日志工作
         DatadirCleanupManager purgeMgr = new DatadirCleanupManager(
             config.getDataDir(),
             config.getDataLogDir(),
@@ -222,9 +222,9 @@ public class QuorumPeerMain {
                 quorumPeer.setQuorumServerLoginContext(config.quorumServerLoginContext);
                 quorumPeer.setQuorumLearnerLoginContext(config.quorumLearnerLoginContext);
             }
-            // 线程数
+            // 设置用于创建连接的线程池大小，如果配置的线程数小于20个则设置为20个
             quorumPeer.setQuorumCnxnThreadsSize(config.quorumCnxnThreadsSize);
-            // 初始化
+            // 初始化服务器
             quorumPeer.initialize();
 
             if (config.jvmPauseMonitorToRun) {
